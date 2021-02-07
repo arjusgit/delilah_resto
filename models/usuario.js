@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
       autoIncrement: true,
       allowNull: false,
     },
-    username: {
+    nombreUsuario: {
       type: type.STRING,
       isAlphanumeric: true,
       allowNull: false,
@@ -33,6 +33,11 @@ module.exports = (sequelize, type) => {
       isAlphanumeric: true,
       allowNull: false,
     },
+    salt: {
+      type: type.STRING,
+      isAlphanumeric: true,
+      allowNull: false,
+    }
     // rolId: type.INTEGER,
   });
 

@@ -1,0 +1,9 @@
+POST http://localhost:5000/api/usuario/registro
+Content-Type: application/x-www-form-urlencoded
+
+nombreCompleto=Maximiliano Meza
+&email=maximeza@gmail.com
+&telefono=1523942753
+&direccion=Las Heras 4223
+&password=triplobo
+&rolId=2

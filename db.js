@@ -8,7 +8,6 @@ const pedidoProductoModel = require("./models/pedidoProducto");
 const pedidoModel = require("./models/pedido");
 const formaPagoModel = require("./models/formaPago");
 const estadoModel = require("./models/estado");
-const rol = require("./models/rol");
 const formaPago = require("./models/formaPago");
 
 //instancia Sequelize para conectar con la DB
@@ -18,7 +17,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASS,
   {
     host: process.env.DB_HOST,
-    dialect: "mysql" /* one of 'mysql' | 'mariadb' | 'postgres' | 'mssql' */,
+    dialect: "mysql",
     define: {
       timestamps: false,
       freezeTableName: true,

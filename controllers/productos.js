@@ -10,17 +10,3 @@ exports.listarProductos = async (req, res) => {
     });
   }
 };
-
-exports.crearProducto = async (req, res) => {
-  const productoRegistrado = await Producto.findOne({
-    where: { titulo: req.body.titulo },
-  });
-  if (!productoRegistrado) {
-    const producto = await Producto.create(req.body);
-    res.status(201).send(producto);
-  } else {
-    res
-      .status(500)
-      .send({ error: "⚠️ Ya existe un producto registrado con ese título" });
-  }
-};

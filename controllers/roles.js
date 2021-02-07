@@ -7,7 +7,3 @@ exports.listarRoles = async (req, res) => {
     res.json(roles);
 }
 
-exports.crearRoles = async (req, res) => {
-        const rol = await Rol.create(req.body);
-        res.json(rol);
-    }
