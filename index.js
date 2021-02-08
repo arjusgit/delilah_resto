@@ -10,7 +10,7 @@ app.use(express.urlencoded( {extended: true })); //Parse URL-encoded bodies
 app.use('/api', router);
 
 app.listen(port, () => {
-  console.log(`🚀🚀🚀 Estamos conectados 🚀🚀🚀 Servidor funcionando ✅ en http://localhost:${port} 👏`);
+  console.log(`🚀 Estamos conectados 🚀 Servidor funcionando ✅ en http://localhost:${port} 👏`);
 });
 
 // const Sequelize = require('sequelize');

@@ -3,43 +3,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-
-exports.login = async (req, res) => {
-  try {
-    const usuario = await Usuario.findOne({
-      where: { nombreUsuario: req.body.nombreUsuario },
-    });
-    if (usuario) {
-      const hashedPassword = await bcrypt.hash(req.body.password, usuario.salt);
-      const iguales = bcrypt.compareSync(req.body.password, usuario.password);
-      if (iguales) {
-        let tokenAcceso = generarTokenAcceso(usuario);
-        res.status(200).send({
-          msg: "✅ Sesión iniciada con éxito",
-          usuario: usuario.nombreUsuario,
-          token: tokenAcceso,
-        });
-      } else {
-        res
-          .status(401)
-          .send({ error: "⛔️ El usuario y/o contraseña son incorrectos" });
-      }
-    } else {
-      res
-        .status(401)
-        .send({ error: "⛔️ No hay usuarios registrados que coincidan con estos datos" });
-    }
-  } catch (e) {
-    res
-    .status(500)
-    .send({ error: e.message, stack: e.stack });
-}
-  }
-
-  //"⚠️ Ocurrió un error en el login"
- 
-
-
 exports.crearUsuario = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt();
@@ -63,6 +26,48 @@ exports.crearUsuario = async (req, res) => {
     res
       .status(500)
       .send({ error: "⚠️ Ocurrió un error en el registro" });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const usuario = await Usuario.findOne({
+      where: { nombreUsuario: req.body.nombreUsuario },
+    });
+    if (usuario) {
+      const iguales = bcrypt.compareSync(req.body.password, usuario.password);
+      if (iguales) {
+        let tokenAcceso = generarTokenAcceso(usuario);
+        res.status(200).send({
+          msg: "✅ Sesión iniciada con éxito",
+          usuario: usuario.nombreUsuario,
+          token: tokenAcceso,
+        });
+      } else {
+        res
+          .status(401)
+          .send({ error: "⛔️ El usuario y/o contraseña son incorrectos" });
+      }
+    } else {
+      res
+        .status(401)
+        .send({ error: "⛔️ No hay usuarios registrados que coincidan con estos datos" });
+    }
+  } catch (e) {
+    res
+    .status(500)
+    .send({ error: e.message, stack: e.stack });
+}
+  } 
+
+exports.listarUsuarios = async (req, res) => {
+  const usuarios = await Usuario.findAll();
+  if (usuarios.length > 0) {
+    res.status(200).send(usuarios);
+  } else {
+    res.send({
+      msg: "No hay usuarios registrados",
+    });
   }
 };
 

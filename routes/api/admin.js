@@ -3,22 +3,16 @@ const express = require('express');
 const router = express.Router();
 
 const adminController = require('../../controllers/admin');
+const authController = require('../../controllers/auth');
 
-router.get('/rol', adminController.listarRoles);
+router.get('/rol', authController.autenticarAdmin, adminController.listarRoles);
 
-router.post('/rol', adminController.crearRoles);
+router.post('/rol', authController.autenticarAdmin, adminController.crearRoles);
 
-router.put('/rol', adminController.modificarRoles);
+router.put('/rol', authController.autenticarAdmin, adminController.modificarRoles);
 
-router.delete('/rol', adminController.eliminarRoles);
-
-router.post('/producto', adminController.crearProducto);
-
-router.put('/producto', adminController.modificarProducto);
-
-router.delete('/producto', adminController.eliminarProducto);
-
-router.get('/usuario', adminController.listarUsuarios);
+router.delete('/rol', authController.autenticarAdmin, adminController.eliminarRoles);
 
 
 module.exports = router;
+

@@ -7,3 +7,11 @@ nombreCompleto=Maximiliano Meza
 &direccion=Las Heras 4223
 &password=triplobo
 &rolId=2
+
+###
+POST http://localhost:5000/api/admin/rol
+Content-Type: application/x-www-form-urlencoded
+
+id=2
+&descripcion=usuarios
+
