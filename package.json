@@ -13,8 +13,7 @@
     "sequelize": "^6.3.5"
   },
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC"

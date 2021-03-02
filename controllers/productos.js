@@ -11,6 +11,19 @@ exports.listarProductos = async (req, res) => {
   }
 };
 
+exports.obtenerProductoPorId = async (req, res) => {
+  const productoEncontrado = await Producto.findOne({
+    where: { id: req.params.productoId },
+  });
+  if (productoEncontrado) {
+    res.status(200).send(productoEncontrado);
+  } else {
+    res.send({
+      msg: "El id no corresponde a un producto registrado",
+    });
+  }
+};
+
 exports.crearProducto = async (req, res) => {
   const productoRegistrado = await Producto.findOne({
     where: { titulo: req.body.titulo },
@@ -27,10 +40,13 @@ exports.crearProducto = async (req, res) => {
 
 exports.modificarProducto = async (req, res) => {
   const productoRegistrado = await Producto.findOne({
-    where: { titulo: req.body.titulo },
+    where: { id: req.params.productoId },
   });
   if (productoRegistrado) {
-    const modificar = await Producto.update(req.body);
+    await Producto.update(
+      req.body,
+      { where: { id: req.params.productoId } }
+    );
     res.status(200).send({ msg: "✅ Producto modificado con éxito" });
   } else {
     res.status(500).send({
@@ -41,15 +57,15 @@ exports.modificarProducto = async (req, res) => {
 
 exports.eliminarProducto = async (req, res) => {
   const productoRegistrado = await Producto.findOne({
-    where: { titulo: req.body.titulo },
+    where: { id: req.body.id },
   });
-
   if (productoRegistrado) {
-    await productoRegistrado.destroy(req.body);
+    await productoRegistrado.destroy(productoRegistrado);
     res.status(200).send({ msg: "✅ Producto eliminado con éxito" });
   } else {
     res.status(500).send({
-      error: "⚠️ El producto con ese título no fue creado o ya fue eliminado",
+      error:
+        "⚠️ El producto con ese id no fue creado o fue eliminado anteriormente",
     });
   }
 };

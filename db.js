@@ -16,9 +16,10 @@ const sequelize = new Sequelize(
   process.env.DB_USER,
   process.env.DB_PASS,
   {
+    dialect: process.env.DB_DIALECT,
     host: process.env.DB_HOST,
-    dialect: "mysql",
-    define: {
+    port: process.env.DB_PORT,
+    define: {      
       timestamps: false,
       freezeTableName: true,
       underscored: true
@@ -46,7 +47,7 @@ Estado.hasMany(Pedido, { foreignKey: { allowNull: false }, constraints: true, on
 sequelize
   .sync({ force: false })
   .then(() => console.log("✅ Tablas sincronizadas"))
-  .catch((err) => console.error("⛔️ Error al sincronizar las tablas"));
+  .catch((err) => console.error(err.stack));
 
 module.exports = {
   Usuario,
